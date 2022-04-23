@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,8 +8,12 @@
   <link rel="stylesheet" href="./layui/css/layui.css">
   <title>Document</title>
 </head>
+
 <body>
   <div class="layui-btn-container">
+    <button type="button" class="layui-btn layui-btn-sm" lay-demo="setAllChecked">全选</button>
+    <button type="button" class="layui-btn layui-btn-sm" lay-demo="setUnChecked">全不选</button>
+    <button type="button" class="layui-btn layui-btn-sm" lay-demo="setReverseChecked">反选</button>
     <button type="button" class="layui-btn layui-btn-sm" lay-demo="getChecked">获取选中节点数据</button>
     <button type="button" class="layui-btn layui-btn-sm" lay-demo="setChecked">勾选指定节点</button>
     <button type="button" class="layui-btn layui-btn-sm" lay-demo="reload">重载实例</button>
@@ -18,209 +23,285 @@
 
   <script src="./layui/layui.all.js"></script>
   <script>
-      // < !--前端框架：第二章：Layui(类UI) 框架：关于2.2.5版本没有模块的解决方案 https://juejin.cn/post/6956204363115479054 -->
-      
-    layui.use(['tree', 'util','jquery'], function () {
-        var $ = layui.$
-        var tree = layui.tree
-          , layer = layui.layer
-          , util = layui.util
-          //模拟数据
-          , data = [{
-            title: '一级1'
-            , id: 1
-            , field: 'name1'
-            , spread: true
+    // < !--前端框架：第二章：Layui(类UI) 框架：关于2.2.5版本没有模块的解决方案 https://juejin.cn/post/6956204363115479054 -->
+    function getData() {
+      return [{
+        title: '一级1'
+        , id: 1
+        , field: 'name1'
+        , spread: true
+        , children: [{
+          title: '二级1-1 可允许跳转'
+          , id: 3
+          , field: 'name11'
+          , spread: true
+          , children: [{
+            title: '三级1-1-3'
+            , id: 23
+            , field: ''
             , children: [{
-              title: '二级1-1 可允许跳转'
-              , id: 3
-              , field: 'name11'
-              , spread: true
-              , children: [{
-                title: '三级1-1-3'
-                , id: 23
-                , field: ''
-                , checked: false
-                , children: [{
-                  title: '四级1-1-3-1'
-                  , id: 24
-                  , field: ''
-                  , children: [{
-                    title: '五级1-1-3-1-1'
-                    , id: 30
-                    , field: ''
-                  }, {
-                    title: '五级1-1-3-1-2'
-                    , id: 31
-                    , field: ''
-                  }]
-                }]
-              }, {
-                title: '三级1-1-1'
-                , id: 7
-                , field: ''
-                , checked: true                
-              }, {
-                title: '三级1-1-2'
-                , id: 8
-                , field: ''                
-              }]
-            }, {
-              title: '二级1-2'
-              , id: 4
-              , spread: true
-              , checked: false
-              , children: [{
-                title: '三级1-2-1'
-                , id: 9
-                , field: ''
-                ,checked: false
-              }, {
-                title: '三级1-2-2'
-                , id: 10
-                , field: ''
-              }]
-            }, {
-              title: '二级1-3'
-              , id: 20
+              title: '四级1-1-3-1'
+              , id: 24
               , field: ''
               , children: [{
-                title: '三级1-3-1'
-                , id: 21
+                title: '五级1-1-3-1-1'
+                , id: 30
                 , field: ''
               }, {
-                title: '三级1-3-2'
-                , id: 22
+                title: '五级1-1-3-1-2'
+                , id: 31
                 , field: ''
               }]
             }]
           }, {
-            title: '一级2'
-            , id: 2
+            title: '三级1-1-1'
+            , id: 7
             , field: ''
-            , spread: true
-            , children: [{
-              title: '二级2-1'
-              , id: 5
-              , field: ''
-              , spread: true
-              , children: [{
-                title: '三级2-1-1'
-                , id: 11
-                , field: ''
-              }, {
-                title: '三级2-1-2'
-                , id: 12
-                , field: ''
-              }]
-            }, {
-              title: '二级2-2'
-              , id: 6
-              , field: ''
-              , children: [{
-                title: '三级2-2-1'
-                , id: 13
-                , field: ''
-              }, {
-                title: '三级2-2-2'
-                , id: 14
-                , field: ''
-                , disabled: true
-              }]
-            }]
           }, {
-            title: '一级3'
-            , id: 16
+            title: '三级1-1-2'
+            , id: 8
             , field: ''
-            , children: [{
-              title: '二级3-1'
-              , id: 17
-              , field: ''
-              , fixed: true
-              , children: [{
-                title: '三级3-1-1'
-                , id: 18
-                , field: ''
-              }, {
-                title: '三级3-1-2'
-                , id: 19
-                , field: ''
-              }]
-            }, {
-              title: '二级3-2'
-              , id: 27
-              , field: ''
-              , children: [{
-                title: '三级3-2-1'
-                , id: 28
-                , field: ''
-              }, {
-                title: '三级3-2-2'
-                , id: 29
-                , field: ''
-              }]
-            }]
           }]
+        }, {
+          title: '二级1-2'
+          , id: 4
+          , spread: true
+          , children: [{
+            title: '三级1-2-1'
+            , id: 9
+            , field: ''
+            , checked: false
+          }, {
+            title: '三级1-2-2'
+            , id: 10
+            , field: ''
+          }]
+        }, {
+          title: '二级1-3'
+          , id: 20
+          , field: ''
 
-
-        //基本演示
-        tree.render({
-          elem: '#test12'
-          , data: data
-          , showCheckbox: true  //是否显示复选框
-          , id: 'demoId1'
-          , isJump: true //是否允许点击节点时弹出新窗口跳转
-          , click: function (obj) {
-            var data = obj.data;  //获取当前点击的节点数据
-            layer.msg('状态：' + obj.state + '<br>节点数据：' + JSON.stringify(data));
-          }
-        });
-
-        //按钮事件
-        util.event('lay-demo', {
-          getChecked: function (othis) {
-            var treecheckdata = tree.getChecked('demoId1'); //获取选中节点的数据
-
-            // layer.alert(JSON.stringify(checkedData), { shade: 0 });
-            // console.log(checkedData);
-            // var treecheckdata = tree.getChecked('demoId');
-            var nodeIds = new Array();
-            nodeIds = getCheckedId(treecheckdata);
-            // 测试
-            var permList = nodeIds;
-            console.log("permList:" + permList);
-
-            // 获取选中节点的id
-            function getCheckedId(jsonObj) {
-              var id = "";
-              $.each(jsonObj, function (index, item) {
-                if (id != "") {
-                  id = id + "," + item.id;
-                }
-                else {
-                  id = item.id;
-                }
-                var i = getCheckedId(item.children);
-                if (i != "") {
-                  id = id + "," + i;
-                }
-              });
-              return id;
+        }]
+      }, {
+        title: '一级2'
+        , id: 2
+        , field: ''
+        , spread: true
+        , children: [{
+          title: '二级2-1'
+          , id: 5
+          , field: ''
+          , spread: true
+          , children: [{
+            title: '三级2-1-1'
+            , id: 11
+            , field: ''
+          }, {
+            title: '三级2-1-2'
+            , id: 12
+            , field: ''
+          }]
+        }, {
+          title: '二级2-2'
+          , id: 6
+          , field: ''
+          , children: [{
+            title: '三级2-2-1'
+            , id: 13
+            , field: ''
+          }, {
+            title: '三级2-2-2'
+            , id: 14
+            , field: ''
+            , disabled: true
+          }]
+        }]
+      }, {
+        title: '一级3'
+        , id: 16
+        , field: ''
+        , children: [{
+          title: '二级3-1'
+          , id: 17
+          , field: ''
+          , fixed: true
+          , children: [{
+            title: '三级3-1-1'
+            , id: 18
+            , field: ''
+          }, {
+            title: '三级3-1-2'
+            , id: 19
+            , field: ''
+          }]
+        }, {
+          title: '二级3-2'
+          , id: 27
+          , field: ''
+          , children: [{
+            title: '三级3-2-1'
+            , id: 28
+            , field: ''
+          }, {
+            title: '三级3-2-2'
+            , id: 29
+            , field: ''
+          }]
+        }]
+      }];
+    }
+    layui.use(['tree', 'util', 'jquery'], function () {
+      var $ = layui.$
+      var tree = layui.tree
+        , layer = layui.layer
+        , util = layui.util
+      $.ajax({
+        'url': 'https://randomuser.me/api/',
+        'type': 'get',
+        success: function (suc) {
+          console.log(suc)
+          //基本演示
+          let data= getData()
+          tree.render({
+            elem: '#test12'
+            , data: data
+            , check: 'checkbox'
+            , showCheckbox: true  //是否显示复选框
+            , accordion: true
+            , id: 'demoId1'
+            , data: data
+            , isJump: true //是否允许点击节点时弹出新窗口跳转
+            , click: function (obj) {
+              var data = obj.data;  //获取当前点击的节点数据
+              layer.msg('状态：' + obj.state + '<br>节点数据：' + JSON.stringify(data));
             }
-          }
-          , setChecked: function () {
-            tree.setChecked('demoId1', [12, 16]); //勾选指定节点
-          }
-          , reload: function () {
-            //重载实例
-            tree.reload('demoId1', {
+          });
+          // 加載以選擇ID
+          tree.setChecked('demoId1', [9, 20]);
+          //按钮事件
+          util.event('lay-demo', {
+            getChecked: function (othis) {
+              var treeCheckData = tree.getChecked('demoId1'); //获取选中节点的数据
+              var nodeIds = new Array();
+              nodeIds = getCheckedId(treeCheckData);
+              var permList = nodeIds;
+              console.log("permList:" + permList);
 
-            });
+              // 获取选中节点的id
+              function getCheckedId(jsonObj) {
+                var id = "";
+                $.each(jsonObj, function (index, item) {
+                  if (id != "") {
+                    id = id + "," + item.id;
+                  }
+                  else {
+                    id = item.id;
+                  }
+                  var i = getCheckedId(item.children);
+                  if (i != "") {
+                    id = id + "," + i;
+                  }
+                });
+                return id;
+              }
+            }
+            , setAllChecked: function () {
+              allSelect(data)
+              tree.reload('demoId1', {
+                data: data
+              });
+            }
+            , setUnChecked: function () {
+              allUnSelect(data)
+              tree.reload('demoId1', {
+                data: data
+              });
+            }
+            , setReverseChecked: function () {
+              reverseChecked(data)
+              tree.reload('demoId1', {
+                data: data
+              });
+            }
+            , setChecked: function () {
+              tree.setChecked('demoId1', [9, 20]); //勾选指定节点
+            }
+            , reload: function () {
+              //重载实例
+              tree.reload('demoId1', {
+              });
+              tree.setChecked('demoId1', [9, 20]);
+            }
+          });
 
+          // 全选
+          function allSelect(data) {
+            $.each(data, function (index, item) {
+              item.checked = true;
+              if (item.children.length) {
+                $.each(item.children, function (index2, item2) {
+                  if (!item2.checked) {
+                    item2.checked = true;
+                  }
+                })
+              }
+
+            })
           }
-        });
+          //全不选
+          function allUnSelect(data) {
+            $.each(data, function (index, item) {
+              item.checked = false;
+              if (item.children.length) {
+                $.each(item.children, function (index2, item2) {
+                  if (item2.checked) {
+                    item2.checked = false;
+                  }
+                })
+              }
+            })
+          }
+          //反选
+          function reverseChecked(data) {
+            var checkedData = tree.getChecked('demoId1'); //获取选中节点的数据
+            // let allElement = getId(data);
+            let selectElement = getId(checkedData);
+            if (selectElement.length) {
+              $.each(data, function (index, item) {
+                $.each(item.children, function (index2, item2) {
+                  if (selectElement.includes(item2.id)) {
+                    item2.checked = false;
+                  } else {
+                    item2.checked = true;
+                  }
+                })
+              })
+            } else {
+              allUnSelect(data);
+            }
+            // console.log(allElement, '数据')
+            // console.log(getId(checkedData), '选中数据')
+          }
+          // y用来递归筛选id
+          function getId(data) {
+            let myArmy = [];
 
-      });
+            $.each(data, function (index, item) {
+              if (item.children.length) {
+                $.each(item.children, function (index2, item2) {
+                  myArmy.push(item2.id)
+                })
+              }
+            })
+            return myArmy;
+          }
+        }
+      })
+
+
+    });
+
   </script>
 </body>
+
 </html>
