@@ -10,6 +10,18 @@
 </head>
 
 <body>
+  <div class="layui-container">
+    <div class="layui-row">
+      <div class="layui-col" style="margin:1rem 0rem 1rem 0;">权限显示</div>
+      <a type="button" class="layui-btn layui-btn-sm" href="./product.html" style="margin:1rem 0rem 1rem 0;">Product 权限显示页</a>
+    </div>
+    <div class="lay-row">
+        <div class="layui-btn-container">
+          <button type="button" class="layui-btn layui-btn-sm auth" has_permission="4">用户编辑</button>
+          <button type="button" class="layui-btn layui-btn-sm auth" has_permission="5">用户删除</button>
+        </div>
+    </div>
+  </div>
   <div class="layui-btn-container">
     <button type="button" class="layui-btn layui-btn-sm" lay-demo="setAllChecked">全选</button>
     <button type="button" class="layui-btn layui-btn-sm" lay-demo="setUnChecked">全不选</button>
@@ -18,138 +30,62 @@
     <button type="button" class="layui-btn layui-btn-sm" lay-demo="setChecked">勾选指定节点</button>
     <button type="button" class="layui-btn layui-btn-sm" lay-demo="reload">重载实例</button>
   </div>
-
   <div id="test12" class="demo-tree-more"></div>
 
   <script src="./layui/layui.all.js"></script>
+  <script type="module">
+    import { checkPermission } from './utils/permission.js';
+    let permissions = [ 4, 2, 1, 9, 7 ]
+    window.onload = function () {
+      checkPermission(permissions)
+    };
+  </script>
   <script>
+ 
+
     // < !--前端框架：第二章：Layui(类UI) 框架：关于2.2.5版本没有模块的解决方案 https://juejin.cn/post/6956204363115479054 -->
     function getData() {
       return [{
-        title: '一级1'
-        , id: 1
-        , field: 'name1'
-        , spread: true
-        , children: [{
-          title: '二级1-1 可允许跳转'
-          , id: 3
-          , field: 'name11'
-          , spread: true
-          , children: [{
-            title: '三级1-1-3'
-            , id: 23
-            , field: ''
-            , children: [{
-              title: '四级1-1-3-1'
-              , id: 24
-              , field: ''
-              , children: [{
-                title: '五级1-1-3-1-1'
-                , id: 30
-                , field: ''
-              }, {
-                title: '五级1-1-3-1-2'
-                , id: 31
-                , field: ''
-              }]
-            }]
-          }, {
-            title: '三级1-1-1'
-            , id: 7
-            , field: ''
-          }, {
-            title: '三级1-1-2'
-            , id: 8
-            , field: ''
-          }]
-        }, {
-          title: '二级1-2'
-          , id: 4
-          , spread: true
-          , children: [{
-            title: '三级1-2-1'
-            , id: 9
-            , field: ''
-            , checked: false
-          }, {
-            title: '三级1-2-2'
-            , id: 10
-            , field: ''
-          }]
-        }, {
-          title: '二级1-3'
-          , id: 20
-          , field: ''
-
-        }]
+        "id": 1,
+        "title": "一级菜单-1(1)",
+        "spread":true,
+        "children": [
+          {
+            "id": 2,
+            "title": "二级菜单-1-1(2)",
+            "spread": true,
+            "children": [
+              {
+                "id": 4,
+                "title": "三级菜单-编辑(4)",
+              },
+              {
+                "id": 5,
+                "title": "三级菜单-删除(5)",
+              }
+            ]
+          },
+          {
+            "id": 3,
+            "title": "二级菜单-1-2(3)",
+            "children": []
+          }
+        ]
       }, {
-        title: '一级2'
-        , id: 2
-        , field: ''
-        , spread: true
-        , children: [{
-          title: '二级2-1'
-          , id: 5
-          , field: ''
-          , spread: true
-          , children: [{
-            title: '三级2-1-1'
-            , id: 11
-            , field: ''
-          }, {
-            title: '三级2-1-2'
-            , id: 12
-            , field: ''
-          }]
-        }, {
-          title: '二级2-2'
-          , id: 6
-          , field: ''
-          , children: [{
-            title: '三级2-2-1'
-            , id: 13
-            , field: ''
-          }, {
-            title: '三级2-2-2'
-            , id: 14
-            , field: ''
-            , disabled: true
-          }]
-        }]
-      }, {
-        title: '一级3'
-        , id: 16
-        , field: ''
-        , children: [{
-          title: '二级3-1'
-          , id: 17
-          , field: ''
-          , fixed: true
-          , children: [{
-            title: '三级3-1-1'
-            , id: 18
-            , field: ''
-          }, {
-            title: '三级3-1-2'
-            , id: 19
-            , field: ''
-          }]
-        }, {
-          title: '二级3-2'
-          , id: 27
-          , field: ''
-          , children: [{
-            title: '三级3-2-1'
-            , id: 28
-            , field: ''
-          }, {
-            title: '三级3-2-2'
-            , id: 29
-            , field: ''
-          }]
-        }]
-      }];
+          "id": 7,
+          "title": "一级菜单-2(7)",
+          "spread": true,
+          "children": [
+            {
+              "id": 9,
+              "title": "二级菜单-2-2(9)",
+              "children": []
+            }
+          ]
+        }];
     }
+
+
     layui.use(['tree', 'util', 'jquery'], function () {
       var $ = layui.$
       var tree = layui.tree
@@ -161,7 +97,7 @@
         success: function (suc) {
           console.log(suc)
           //基本演示
-          let data= getData()
+          let data = getData()
           tree.render({
             elem: '#test12'
             , data: data
@@ -177,7 +113,7 @@
             }
           });
           // 加載以選擇ID
-          tree.setChecked('demoId1', [9, 20]);
+          tree.setChecked('demoId1', [4,9]);
           //按钮事件
           util.event('lay-demo', {
             getChecked: function (othis) {

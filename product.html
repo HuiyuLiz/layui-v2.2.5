@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./layui/css/layui.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="layui-container">
+    <div class="layui-row">
+      <div class="layui-col-md5" style="margin:1rem 0rem 1rem 0;">Product 权限显示</div>
+    </div>
+  </div>
+  <div class="layui-btn-container">
+    <button type="button" class="layui-btn layui-btn-sm auth" has_permission="11">一般用户编辑</button>
+    <button type="button" class="layui-btn layui-btn-sm auth" has_permission="12">一般用户删除</button>
+    <button type="button" class="layui-btn layui-btn-sm auth" has_permission="14">一般用户删除</button>
+  </div>
+
+  <div id="test12" class="demo-tree-more"></div>
+
+  <script src="./layui/layui.all.js"></script>
+  <script type="module">
+    import { checkPermission } from './utils/permission.js';
+    (function () {
+      let permissions = [ 11, 12, 1, 9, 7 ]
+      checkPermission(permissions)
+    })()
+  </script>
+</body>
+
+</html>
