@@ -114,6 +114,15 @@
           });
           // 加載以選擇ID
           tree.setChecked('demoId1', [4,9]);
+          // let checkedId= [4, 9]
+          // let values= document.querySelectorAll('input[type=checkbox]')
+          // values.forEach(value=>{
+          //   let Id= +value.value
+          //   if (checkedId.includes(Id)){
+          //     value.nextSibling.classList.add('layui-form-checked')
+          //   }
+          // })
+
           //按钮事件
           util.event('lay-demo', {
             getChecked: function (othis) {
@@ -166,7 +175,6 @@
               //重载实例
               tree.reload('demoId1', {
               });
-              tree.setChecked('demoId1', [9, 20]);
             }
           });
 

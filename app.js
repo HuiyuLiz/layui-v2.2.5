@@ -76,14 +76,6 @@
 		});
 	})
 
-// 	apiList.forEach(api=>{
-// 		api.forEach(a=>{
-// 			if(a.status===1){
-// 				console.log(a.id)
-// 			}
-// 		})
-// })
-
 // 找出 status==1 的id
 let formatData=[{
     "id": 1,
